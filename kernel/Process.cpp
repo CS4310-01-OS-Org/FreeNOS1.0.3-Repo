@@ -23,7 +23,7 @@
 #include "Process.h"
 #include "ProcessEvent.h"
 
-Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map)
+Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map, U8 p = 3)
     : m_id(id), m_map(map), m_shares(id)
 {
     m_state         = Stopped;
@@ -31,6 +31,7 @@ Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &
     m_waitId        = 0;
     m_waitResult    = 0;
     m_wakeups       = 0;
+    priority = p;
     m_entry         = entry;
     m_privileged    = privileged;
     m_memoryContext = ZERO;
@@ -55,6 +56,10 @@ Process::~Process()
         m_memoryContext->releaseSection(m_map.range(MemoryMap::UserShare), true);
         delete m_memoryContext;
     }
+}
+
+U8 Process::getPriority() {
+    return priority;
 }
 
 ProcessID Process::getID() const

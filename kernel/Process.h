@@ -81,7 +81,7 @@ class Process
      * @param privileged If true, the process has unlimited access to hardware.
      * @param map Memory map to use
      */
-    Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map);
+    Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map, U8 p);
 
     /**
      * Destructor function.
@@ -111,6 +111,11 @@ class Process
      * Get wait result
      */
     uint getWaitResult() const;
+
+    /**
+     * get priority leve
+     */
+    U8 getPriority();
 
     /**
      * Get process shares.
@@ -272,6 +277,9 @@ class Process
 
     /** Number of wakeups received */
     Size m_wakeups;
+
+    /** Priority Level 1-5 default = 3 */
+    U8 priority;
 
     /**
      * Sleep timer value.
