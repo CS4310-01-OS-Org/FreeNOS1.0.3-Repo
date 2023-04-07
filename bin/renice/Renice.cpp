@@ -19,64 +19,27 @@
 #include <Macros.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h> 
 #include <ProcessClient.h>
-#include "ProcessList.h"
+#include <ProcessManager.h>
+#include "Renice.h"
 
-ProcessList::ProcessList(int argc, char **argv)
+Renice::Renice(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
-    parser().setDescription("Output system process list");
-    parser().registerFlag('l', "long", "List processes in long output format");
+    parser().setDescription("Alters the priority of a running process");
+    parser().registerPositional("PID", "Process ID of process whose priority will be changed", 0);
+    parser().registerPositional("PRIORITY", "priority to be set for process");
+    parser().registerFlag('n', "priorityFlag", "priority to be set for process");
 }
 
-ProcessList::Result ProcessList::exec()
+Renice::Result Renice::exec()
 {
-    const ProcessClient process;
+    ProcessManager manager;
     String out;
+    Process *process = manager.get(atoi(arguments().get("PID")));
+    process.setPriority(atoi(arguments().get("PRIORITY")));
 
-    // Print header
-    if(!arguments().get("long")) {
-        out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
-
-    }
-    else {
-        out << "ID  PARENT  USER GROUP PRIORITY STATUS     CMD\r\n";
-
-    }
-
-    // Loop processes
-    for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
-    {
-        ProcessClient::Info info;
-
-        const ProcessClient::Result result = process.processInfo(pid, info);
-        if (result == ProcessClient::Success)
-        {
-            DEBUG("PID " << pid << " state = " << *info.textState);
-
-            char line[128];
-            if (!arguments().get("long")) {
-                snprintf(line, sizeof(line),
-                    "%3d %7d %4d %5d %8u %10s %32s\r\n",
-                    pid, info.kernelState.parent,
-                    0, 0, *info.textState, *info.command);
-
-            }
-            else {
-                snprintf(line, sizeof(line),
-                    "%3d %7d %4d %5d %8u %10s %32s\r\n",
-                    pid, info.kernelState.parent,
-                    0, 0, info.kernelState.priority, *info.textState, *info.command);
-
-            }
-
-            // Output a line
-             
-            out << line;
-        }
-    }
-
-    // Output the table
-    write(1, *out, out.length());
+    
     return Success;
 }

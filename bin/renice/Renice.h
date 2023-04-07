@@ -28,7 +28,7 @@
 /**
  * Output the system process list.
  */
-class ProcessList : public POSIXApplication
+class Renice : public POSIXApplication
 {
   public:
 
@@ -38,7 +38,7 @@ class ProcessList : public POSIXApplication
      * @param argc Argument count
      * @param argv Argument values
      */
-    ProcessList(int argc, char **argv);
+    Renice(int argc, char **argv);
 
     /**
      * Execute the application.
