@@ -58,7 +58,7 @@ Process::~Process()
     }
 }
 
-U8 Process::getPriority() {
+u8 Process::getPriority() {
     return priority;
 }
 

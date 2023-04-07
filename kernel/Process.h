@@ -115,7 +115,7 @@ class Process
     /**
      * get priority leve
      */
-    U8 getPriority();
+    u8 getPriority();
 
     /**
      * Get process shares.
@@ -279,7 +279,7 @@ class Process
     Size m_wakeups;
 
     /** Priority Level 1-5 default = 3 */
-    U8 priority;
+    u8 priority;
 
     /**
      * Sleep timer value.
