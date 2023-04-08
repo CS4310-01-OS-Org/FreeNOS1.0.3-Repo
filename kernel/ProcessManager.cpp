@@ -412,7 +412,7 @@ ProcessManager::Result ProcessManager::interruptNotify(const u32 vector)
 
 ProcessManager::Result ProcessManager::enqueueProcess(Process *proc, const bool ignoreState)
 {
-    if (m_scheduler->enqueue(proc, ignoreState) != Scheduler::Success)
+    if (m_scheduler->enqueue(proc, ignoreState,proc->getPriority()) != Scheduler::Success)
     {
         ERROR("process ID " << proc->getID() << " not added to Scheduler");
         return IOError;
@@ -427,7 +427,7 @@ ProcessManager::Result ProcessManager::enqueueProcess(Process *proc, const bool 
 
 ProcessManager::Result ProcessManager::dequeueProcess(Process *proc, const bool ignoreState) const
 {
-    if (m_scheduler->dequeue(proc, ignoreState) != Scheduler::Success)
+    if (m_scheduler->dequeue(proc, ignoreState, proc->getPriority()) != Scheduler::Success)
     {
         ERROR("process ID " << proc->getID() << " not removed from Scheduler");
         return IOError;

@@ -231,7 +231,7 @@ class ProcessManager
      *
      * @return Result code
      */
-    Result dequeueProcess(Process *proc, const bool ignoreState = false) const;
+    Result dequeueProcess(Process *proc, const bool ignoreState = true) const;
 
   private:
 
