@@ -118,6 +118,11 @@ class Process
     u8 getPriority();
 
     /**
+    * Set process priority level.
+    */
+    void setPriority(u8 p);
+
+    /**
      * Get process shares.
      *
      * @return Reference to memory shares.
@@ -246,10 +251,7 @@ class Process
      */
     void setParent(ProcessID id);
 
-    /**
-    * Set process priority level.
-    */
-    void setPriority(u8 p);
+ 
 
   protected:
 

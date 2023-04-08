@@ -28,18 +28,40 @@ Renice::Renice(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
     parser().setDescription("Alters the priority of a running process");
-    parser().registerPositional("PID", "Process ID of process whose priority will be changed", 0);
     parser().registerPositional("PRIORITY", "priority to be set for process");
+    parser().registerPositional("PID", "Process ID of process whose priority will be changed");
+    
     parser().registerFlag('n', "priorityFlag", "priority to be set for process");
 }
 
 Renice::Result Renice::exec()
 {
-    ProcessManager manager;
-    String out;
-    Process *process = manager.get(atoi(arguments().get("PID")));
-    process.setPriority(atoi(arguments().get("PRIORITY")));
-
+    u8 p = atoi(arguments().get("PRIORITY"));
+    ProcessID pid = atoi(arguments().get("PID"));
     
-    return Success;
+    //String out;
+    //out << atoi(arguments().get("PID"));
+    //char line[128];
+    //out << line;
+    //out<< atoi(arguments().get("PRIORITY"));
+    //out << line;
+    //write(1, *out, out.length());
+    ProcessClient process;
+    const ProcessClient::Result result = process.newPrio(pid, p);
+    
+    if (result == ProcessClient::Success) {
+        return Success;
+    }
+    else if (result == ProcessClient::IOError) {
+        String e = "IOError: priority level range 1-5\n";
+        char line[128];
+        e << line;
+        write(1, *e, e.length());
+
+    }
+    {
+        return NotFound;
+    }
+    
+    
 }

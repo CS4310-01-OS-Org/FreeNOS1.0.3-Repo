@@ -53,7 +53,8 @@ typedef enum ProcessOperation
     Wakeup,
     Stop,
     Resume,
-    Reset
+    Reset,
+    NewPrio
 }
 ProcessOperation;
 
@@ -78,6 +79,9 @@ ProcessInfo;
 
 /** Operator to print a ProcessOperation to a Log */
 Log & operator << (Log &log, ProcessOperation op);
+
+//inline API::Result ProcessCtl(const ProcessID proc, u8 p);
+
 
 /**
  * Prototype for user applications. Process management related operations.

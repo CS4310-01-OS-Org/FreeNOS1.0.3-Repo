@@ -97,6 +97,20 @@ Process * ProcessManager::get(const ProcessID id)
     return m_procs.get(id);
 }
 
+ProcessManager::Result ProcessManager::setPriority(const ProcessID id, u8 p)
+{
+
+
+    Process * proc = m_procs.get(id);
+    if (!proc)
+    {
+        FATAL("no process found to run!");
+    }
+    proc->setPriority(p);
+    return Success;
+
+}
+
 void ProcessManager::remove(Process *proc, const uint exitStatus)
 {
     if (proc == m_idle)
