@@ -159,7 +159,8 @@ Scheduler::Result Scheduler::dequeue(Process * proc, bool ignoreState, u8 priori
     }
 
 
-    FATAL("process ID " << proc->getID() << " is not in the schedule p: "<<prio);
+    FATAL("process ID " << proc->getID() << " is not in the schedule p: "<<prio
+    <<" two_queue: "<< two_queue.count()<<" three_queue: "<<three_queue.count());
     return InvalidArgument;
 }
 

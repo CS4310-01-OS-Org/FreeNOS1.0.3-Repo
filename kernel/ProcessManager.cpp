@@ -106,7 +106,9 @@ ProcessManager::Result ProcessManager::setPriority(const ProcessID id, u8 p)
     {
         FATAL("no process found to run!");
     }
+    dequeueProcess(proc, true);
     proc->setPriority(p);
+    enqueueProcess(proc);
     return Success;
 
 }
