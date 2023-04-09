@@ -12,10 +12,10 @@ Gaia Dennison
 
 Features and Comments
 =====
-*Process has extra field Priority
-*ps -l will list the additional field of priority per process
-*renice will change priority of process given new priority level and pid
-*Scheduler will choose to run higher priority processes before the rest
+* Process has extra field Priority
+* ps -l will list the additional field of priority per process
+* renice will change priority of process given new priority level and pid
+* Scheduler will choose to run higher priority processes before the rest
 
 Video
 =====
